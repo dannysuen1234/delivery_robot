@@ -1,0 +1,4 @@
+/home/vtl/magni_ws/src/gazebo_plugin/build/CMakeFiles/rebuild_cache.dir
+/home/vtl/magni_ws/src/gazebo_plugin/build/CMakeFiles/gui_example_spawn_widget.dir
+/home/vtl/magni_ws/src/gazebo_plugin/build/CMakeFiles/edit_cache.dir
+/home/vtl/magni_ws/src/gazebo_plugin/build/CMakeFiles/gui_example_spawn_widget_autogen.dir

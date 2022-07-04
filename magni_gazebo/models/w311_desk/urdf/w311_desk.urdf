@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-1-g15f4949  Build Version: 1.6.7594.29634
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="w311_desk">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="0.0904155526040127 0.0776051816330809 0.189525767443854"
+        rpy="0 0 0" />
+      <mass
+        value="3.43489149705641" />
+      <inertia
+        ixx="0.0474290129999612"
+        ixy="1.98497238479631E-19"
+        ixz="5.40596487837742E-18"
+        iyy="0.0798598162276557"
+        iyz="-0.00147530372222695"
+        izz="0.0685211508707276" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://w311_desk/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://w311_desk/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+</robot>

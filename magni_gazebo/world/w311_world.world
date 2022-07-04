@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<sdf version='1.4'>
+
+<world name='default'>
+
+    <gui>
+      <plugin name="sample" filename="libgui_example_spawn_widget.so"/>
+    </gui>
+
+      <include>
+      <uri>model://sun</uri>
+    </include>
+    <!-- A ground plane -->
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+
+
+  </world>
+</sdf>
