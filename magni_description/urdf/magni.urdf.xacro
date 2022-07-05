@@ -238,7 +238,7 @@
   <!-- Define Lidar -->
   <xacro:if value="${lidar_extrinsics_file != ''}">
     <xacro:property name="lidar_extrinsics" value="${load_yaml(lidar_extrinsics_file)}"/>
-    <xacro:ur50_lidar prefix="magni" name="laser" connected_to="base_link">
+    <xacro:ur50_lidar topic="scan" name="laser" connected_to="base_link">
       <!-- <origin xyz="${lidar_extrinsics['x']} ${lidar_extrinsics['y']} ${lidar_extrinsics['z']}" 
         rpy="${lidar_extrinsics['roll']} ${lidar_extrinsics['pitch']} ${lidar_extrinsics['yaw']}"/> -->
 

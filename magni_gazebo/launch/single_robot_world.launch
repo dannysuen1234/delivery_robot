@@ -1,5 +1,8 @@
 <?xml version="1.0" ?>
 <launch>
+<arg name="map_file" default="$(find magni_nav)/maps/w311_virtual_world.yaml" doc="Path to a map .yaml file (required)." />
+  <arg name="virtual_walls_map_file" default="$(arg map_file)" doc="Path to a virtual walls map .yaml file (optional)." />
+  <arg name="with_virtual_walls" default="false" />
 
     <!-- 
     This string will be taken to search for camera extrinsics yaml file like 
@@ -68,6 +71,17 @@
 
 <include file="$(find magni_gazebo)/launch/magni.launch">
 </include>
+
+<include file="$(find magni_nav)/launch/amcl.launch">
+<arg name="initial_pose_x" value ="0" />
+<arg name="initial_pose_y" value ="0" />
+
+</include>
+
+<include file="$(find magni_nav)/launch/start_planner.launch">
+
+</include>
+
 
     <!-- Additional nodes (optional)  -->
 

@@ -2,7 +2,7 @@
 
 <launch>
 
-<arg name="map_file" default="$(find magni_nav)/map/w311_virtual_world.yaml" doc="Path to a map .yaml file (required)." />
+<arg name="map_file" default="$(find magni_nav)/maps/w311_virtual_world.yaml" doc="Path to a map .yaml file (required)." />
   <arg name="virtual_walls_map_file" default="$(arg map_file)" doc="Path to a virtual walls map .yaml file (optional)." />
   <arg name="with_virtual_walls" default="false" />
 
@@ -30,11 +30,13 @@
  <arg name="prefix" value ="magni_2/" /> 
 </include>
 
+
 <include file="$(find magni_nav)/launch/start_maps.launch">
       <arg name="map_file" value="$(arg map_file)" />
       <arg name="virtual_walls_map_file" value="$(arg virtual_walls_map_file)" />
       <arg name="with_virtual_walls" value="$(arg with_virtual_walls)" />
 </include>
+
 
 
 <!-- this part for rviz -->

@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <launch>
   <arg name="local_planner"          default="dwb"             doc="Local planner can be either dwa, eband, base, teb or pose" />
-  <arg name="map_file" default="$(find magni_nav)/map/w311_virtual_world.yaml" doc="Path to a map .yaml file (required)." />
+  <arg name="map_file" default="$(find magni_nav)/maps/w311_virtual_world.yaml" doc="Path to a map .yaml file (required)." />
   <arg name="virtual_walls_map_file" default="$(arg map_file)" doc="Path to a virtual walls map .yaml file (optional)." />
   <arg name="with_virtual_walls" default="false" />
   <arg name="prefix" default="" />
@@ -17,12 +17,20 @@
 -->
 
 
+
+
     <include file="$(find magni_nav)/launch/move_base.xml">
       <arg name="local_planner" value="$(arg local_planner)"/>
       <arg name="with_virtual_walls" value="$(arg with_virtual_walls)" />
       <arg name="prefix" value="$(arg prefix)" />
     </include>
+
+
   </group>
+
+
+
+
 
   <!-- Duplicate of the above in case namespace is empty. This is necessary to
        avoid the "<group> tag has an empty 'ns' attribute" parsing error. -->
@@ -33,10 +41,12 @@
       <arg name="with_virtual_walls" value="$(arg with_virtual_walls)" />
     </include>
 
+
     <include file="$(find magni_nav)/launch/move_base.xml">
       <arg name="local_planner" value="$(arg local_planner)"/>
       <arg name="with_virtual_walls" value="$(arg with_virtual_walls)" />
       <arg name="prefix" value="$(arg prefix)" />
     </include>
+
   </group>
 </launch>

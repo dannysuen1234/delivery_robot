@@ -5,7 +5,7 @@
   <arg name="namespace" default="$(arg tf_prefix)" doc="Namespace to push all topics into."/>
 
   <arg name="use_map_topic"   default="true"/>
-  <arg name="scan_topic"      default="magni/scan"/>
+  <arg name="scan_topic"      default="scan"/>
   <arg name="map_topic"       default="/map"/>         <!-- if use_map_topic = true  -->
   <arg name="map_service"     default="/static_map"/>  <!-- if use_map_topic = false -->
   <arg name="initial_pose_x"  default="0.0"/>

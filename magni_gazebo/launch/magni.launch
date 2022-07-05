@@ -40,7 +40,7 @@
         <arg name="tower_installed" value="$(arg tower_installed)" />
         <arg name="sonars_installed" value="$(arg sonars_installed)" />
         <arg name="lidar_extrinsics_file" value="$(arg lidar_extrinsics_file)" />
-	<arg name="prefix" value ="$(arg prefix)" />
+	
     </include>
 
     <node name="magni_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" args="$(arg init_pose) -urdf -param robot_description -model $(arg robot_name)" />
