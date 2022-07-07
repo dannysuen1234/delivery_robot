@@ -1,8 +1,9 @@
 local_costmap:
-  global_frame: odom
-  robot_base_frame: base_footprint
+  global_frame: $(arg prefix)odom
+  robot_base_frame: $(arg prefix)base_footprint
   update_frequency: 5.0
   publish_frequency: 2.0
+  transform_tolerance: 0.5  
   static_map: false
   rolling_window: true
   width: 6.0

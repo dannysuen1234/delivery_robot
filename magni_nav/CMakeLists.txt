@@ -138,11 +138,29 @@ catkin_package(
 
 install(DIRECTORY launch/
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch
+
 )
 
 install(DIRECTORY param/
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/param
 )
+
+install(PROGRAMS
+  mprim/genmprim_unicycle_highcost_5cm.py
+  nodes/acc_finder.py
+  nodes/min_max_finder.py
+  scripts/plot_mprim.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
+install(DIRECTORY
+  config
+  launch
+  mprim
+  rviz
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
+
 
 #############
 ## Testing ##

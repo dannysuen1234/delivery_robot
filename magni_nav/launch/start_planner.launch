@@ -16,13 +16,17 @@
     </include>
 -->
 
-
-
-
+<!--
     <include file="$(find magni_nav)/launch/move_base.xml">
       <arg name="local_planner" value="$(arg local_planner)"/>
       <arg name="with_virtual_walls" value="$(arg with_virtual_walls)" />
       <arg name="prefix" value="$(arg prefix)" />
+    </include>
+-->
+
+
+    <include file="$(find magni_nav)/launch/move_base.launch">
+<arg name="prefix" value="$(arg prefix)" />
     </include>
 
 
@@ -41,12 +45,19 @@
       <arg name="with_virtual_walls" value="$(arg with_virtual_walls)" />
     </include>
 
-
+<!--
     <include file="$(find magni_nav)/launch/move_base.xml">
       <arg name="local_planner" value="$(arg local_planner)"/>
       <arg name="with_virtual_walls" value="$(arg with_virtual_walls)" />
       <arg name="prefix" value="$(arg prefix)" />
     </include>
+-->
+
+
+    <include file="$(find magni_nav)/launch/move_base.launch">
+<arg name="prefix" value="$(arg prefix)" />
+    </include>
+
 
   </group>
 </launch>
