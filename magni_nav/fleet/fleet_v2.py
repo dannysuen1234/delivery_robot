@@ -121,10 +121,10 @@ def pending_table_handler():
 			lookup_robot_from_table[curr_table] = curr_robot
 			if int(curr_table) == 1:
 				x = -5
-				y = -6
+				y = -6.5
 			elif int(curr_table) ==2:
-				x = -1
-				y = -6
+				x = -5
+				y = -3
 			else:
 				x = 1
 				y = 1

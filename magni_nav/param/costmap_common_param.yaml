@@ -3,7 +3,7 @@ raytrace_range: 1.0
 
 footprint: [[0.13, 0.24], [0.13, -0.24], [-0.37, -0.24], [-0.37, 0.24]]
 
-inflation_radius: 0.3
+inflation_radius: 0.1
 cost_scaling_factor: 3.0
 
 map_type: costmap
