@@ -53,13 +53,13 @@
         <arg name="use_sim_time" value="true" />
     </include>
 
-<include file="$(find mir_gazebo)/launch/includes/spawn_maze.launch.xml" />
+<include file="$(find magni_gazebo)/launch/includes/spawn_maze.launch.xml" />
 
 
 </group>
     <!-- start robot -->
 
-<!--
+
     <include file="$(find magni_gazebo)/launch/magni.launch">
         <arg name="camera_position" value="$(arg camera_position)"/>
         <arg name="sonars_installed" value="$(arg sonars_installed)"/>
@@ -67,22 +67,28 @@
         <arg name="tower_installed" value="$(arg tower_installed)"/>
         <arg name="shell_installed" value="$(arg shell_installed)"/>
     </include>
--->
 
+<!--
 <include file="$(find magni_gazebo)/launch/magni.launch">
 </include>
 
+-->
+
+<!--
 <include file="$(find magni_nav)/launch/amcl.launch">
 <arg name="initial_pose_x" value ="0" />
 <arg name="initial_pose_y" value ="0" />
 
 </include>
 
+
 <include file="$(find magni_nav)/launch/start_planner.launch">
 
 </include>
 
+
 <node  type = "rviz" name = "rviz" pkg="rviz" args="-d $(find magni_nav)/rviz/navigation_1.rviz" />
+-->
 
     <!-- Additional nodes (optional)  -->
 

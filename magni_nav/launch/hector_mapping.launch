@@ -5,7 +5,7 @@
   <arg name="odom_frame" default="odom"/>
   <arg name="pub_map_odom_transform" default="true"/>
   <arg name="scan_subscriber_queue_size" default="5"/>
-  <arg name="scan_topic" default="magni/scan"/>
+  <arg name="scan_topic" default="scan"/>
   <arg name="map_size" default="2048"/>
     <!-- set use_tf_pose_start_estimate and map_with_known_poses to `true` when
          the map-base_footprint transform is provided by a different node, such

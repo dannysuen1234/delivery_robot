@@ -6,6 +6,7 @@ Panels:
       Expanded:
         - /Grid1
         - /Grid1/Offset1
+        - /RobotModel1
         - /TF1/Frames1
         - /TF1/Tree1
         - /Global Map1/Costmap1
@@ -505,5 +506,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1488
-  X: 254
-  Y: 27
+  X: 923
+  Y: 59

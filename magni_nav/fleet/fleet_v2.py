@@ -82,7 +82,7 @@ def define_robots():
 def tcp_connection():
 	global pending_table_handler_running
 	HOST = '0.0.0.0'
-	PORT = 7000
+	PORT = 9999
 	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 	s.bind((HOST, PORT))

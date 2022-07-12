@@ -7,6 +7,11 @@
 <arg name="tower_installed" default="false"/>
 <arg name="shell_installed" default="false"/>
 
+  <arg name="robot_1_x" default = "-8.0" />
+  <arg name="robot_1_y" default = "-7.0" />
+  <arg name="robot_2_x" default = "-8.0" />
+  <arg name="robot_2_y" default = "-8.0" />
+
   <group ns="magni_1">
     <param name="tf_prefix" value="magni_1" />
     <include file="$(find magni_gazebo)/launch/magni.launch">
@@ -15,7 +20,7 @@
         <arg name="lidar_position" value="$(arg lidar_position)"/>
         <arg name="tower_installed" value="$(arg tower_installed)"/>
         <arg name="shell_installed" value="$(arg shell_installed)"/>
-	<arg name="init_pose" value="-x -8 -y -7.0 -z 0" />
+	<arg name="init_pose" value="-x $(arg robot_1_x) -y $(arg robot_1_y) -z 0" />
 	<arg name="robot_name" value="magni_1" />
 	<arg name="prefix" value = "magni_1" />
 	<arg name="odom_prefix" value = "magni_1" />
@@ -31,7 +36,7 @@
         <arg name="lidar_position" value="$(arg lidar_position)"/>
         <arg name="tower_installed" value="$(arg tower_installed)"/>
         <arg name="shell_installed" value="$(arg shell_installed)"/>
-	<arg name="init_pose" value="-x -8 -y -8 -z 0" />
+	<arg name="init_pose" value="-x $(arg robot_2_x) -y $(arg robot_2_y) -z 0" />
 	<arg name="robot_name" value="magni_2" />
 	<arg name="prefix" value = "magni_2" />
 	<arg name="odom_prefix" value = "magni_2" />
