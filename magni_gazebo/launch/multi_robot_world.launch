@@ -46,7 +46,7 @@
 
  
 <include file="$(find gazebo_ros)/launch/empty_world.launch">
-
+<arg name="world_name" value="$(find magni_gazebo)/world/w311_world.world"/>
         <arg name="gui" value="$(arg gui)" />
         <arg name="headless" value="$(arg headless)" />
         <arg name="paused" value="$(arg paused)" />

@@ -6,18 +6,31 @@ import rospkg
 import os
 import threading
 import webbrowser
+import socket
 
 customtkinter.set_appearance_mode("Dark") 
 customtkinter.set_default_color_theme("blue")  
 
 rospack = rospkg.RosPack()
 
-#define all package variables here
-gazebo_package = "magni_gazebo"
-navigation_package = "magni_nav"
+#variables for button condition
+button_condition = {'task_1_world_started' : False,
+'task_1_mapping_started' : False,
+'task_2_delivery_robot_started' : False,
+'frontend_started': False,
+'backend_started' : False,
+'fleet_started' : False}
+
 frontend_started = False
 backend_started = False
 fleet_started = False
+
+#define all package variables here
+gazebo_package = "magni_gazebo"
+navigation_package = "magni_nav"
+
+HOST = "0.0.0.0"
+PORT = 9998
 
 class App(customtkinter.CTk):
 
@@ -193,7 +206,7 @@ class App(customtkinter.CTk):
 
                 self.robot_button_4 = customtkinter.CTkButton(master=self.frame_right,
                                                 text="Update robot 1",
-                                                command=self.update_button_event)
+                                                command=self.update_robot_1_event)
 
                 self.robot_button_4.grid(row=4, column=2, pady=20, padx=20)
 
@@ -221,7 +234,7 @@ class App(customtkinter.CTk):
 
                 self.robot_button_5 = customtkinter.CTkButton(master=self.frame_right,
                                                 text="Update robot 2",
-                                                command=self.update_button_event)
+                                                command=self.update_robot_2_event)
 
                 self.robot_button_5.grid(row=7, column=2, pady=20, padx=20)
 
@@ -241,6 +254,10 @@ class App(customtkinter.CTk):
                 self.robot_2_z .grid(row=6, column=2, pady=20, padx=20)
 
     def delivery_robot_button(self):
+           if button_condition["task_2_delivery_robot_started"] == True or button_condition["task_1_world_started"] == True:
+               print("failed")
+               return
+           button_condition["task_2_delivery_robot_started"] = True
            robot_1_x = self.tasks_button_2_robot_1_x.get()
            robot_1_y = self.tasks_button_2_robot_1_y.get()
            robot_2_x = self.tasks_button_2_robot_2_x.get()
@@ -304,22 +321,68 @@ class App(customtkinter.CTk):
                 self.start_order_button.grid(row=3, column=1, pady=0, padx=10)
 
     def single_world_button(self):
+        if button_condition['task_2_delivery_robot_started'] == True or button_condition['task_1_world_started']:
+            print("please exit task 1")
+            return
+        button_condition['task_1_world_started'] = True
         path = rospack.get_path(navigation_package)
         mapping_world_thread = threading.Thread(target = os.system, args = [path + "/fleet/start_single_robot.bash"])
         mapping_world_thread.start()
+
+    def update_robot_1_event(self):
+        x = self.robot_1_x.get()
+        y = self.robot_1_y.get()
+        data_to_send = "1"+" " + str(x) + " " + str(y) 
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect((HOST, PORT))
+        s.send(data_to_send.encode())
+        s.close()
        
+    def update_robot_2_event(self):
+        x = self.robot_2_x.get()
+        y = self.robot_2_y.get()
+        data_to_send = "2"+" " + str(x) + " " + str(y) 
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect((HOST, PORT))
+        s.send(data_to_send.encode())
+        s.close()
+
+    def update_table_1_event(self):
+        x = self.table_1_x.get()
+        y = self.table_1_y.get()
+        data_to_send = "3"+" " + str(x) + " " + str(y) 
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect((HOST, PORT))
+        s.send(data_to_send.encode())
+        s.close()
+
+    def update_table_2_event(self):
+        x = self.table_2_x.get()
+        y = self.table_2_y.get()
+        data_to_send = "4"+" " + str(x) + " " + str(y) 
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect((HOST, PORT))
+        s.send(data_to_send.encode())
+        s.close()
+
     def mapping_button(self):
+        if button_condition["task_1_mapping_started"] == True or button_condition["task_1_world_started"] == False:
+             print("failed")
+             return
+        button_condition["task_1_mapping_started"] = True
         path = rospack.get_path(navigation_package)
         mapping_world_thread = threading.Thread(target = os.system, args = [path + "/fleet/start_mapping.bash"])
         mapping_world_thread.start()
 
     def exit_button(self):
-        global fleet_started
-        fleet_started = False
+        global button_condition
+        for item in button_condition:
+            button_condition[item] = False
+
         cmd_1 = "pkill -f ros"
         cmd_2 = "pkill -f rviz"
-        cmd_3 = "pkill -f fleet"
-        cmd_4 = "pkill -f OrderSystem/frontend"
+        cmd_3 = "pkill -9 -f fleet"
+        cmd_4 = "pkill -f /OrderSystem/"
         x = threading.Thread(target = os.system, args=[cmd_1])
         x.start()
         y = threading.Thread(target = os.system, args=[cmd_2])
@@ -351,6 +414,9 @@ class App(customtkinter.CTk):
         webbrowser.open('http://127.0.0.1:3000/scanTable?table=' + table_no)
 
     def save_map_button(self):
+        if button_condition["task_1_mapping_started"] == False:
+             print("failed")
+             return
         map_name = self.map_name.get()
         map_path = rospack.get_path(navigation_package)
         whole_path = map_path + "/maps/" + map_name
@@ -364,12 +430,14 @@ class App(customtkinter.CTk):
         print(command)
     
     def fleet_button(self):
-        global fleet_started
-        if fleet_started == False:
-            fleet_started = True
+        if button_condition["fleet_started"] == False and button_condition["task_2_delivery_robot_started"] ==True :
+            button_condition["fleet_started"] = True
+            print("started fleet management")
             command = "rosrun magni_nav " +"fleet_v2.py"
             fleet_thread = threading.Thread(target = os.system, args = [command])
             fleet_thread.start()
+        else:
+            print("failed")
 
     def button_event_table(self):
                 for item in self.frame_right.winfo_children():
@@ -386,7 +454,7 @@ class App(customtkinter.CTk):
 
                 self.table_button_4 = customtkinter.CTkButton(master=self.frame_right,
                                                 text="Update Table 1",
-                                                command=self.update_button_event)
+                                                command=self.update_table_1_event)
 
                 self.table_button_4.grid(row=4, column=2, pady=20, padx=20)
 
@@ -415,7 +483,7 @@ class App(customtkinter.CTk):
 
                 self.table_button_5 = customtkinter.CTkButton(master=self.frame_right,
                                                 text="Update table 2",
-                                                command=self.update_button_event)
+                                                command=self.update_table_2_event)
 
                 self.table_button_5.grid(row=7, column=2, pady=20, padx=20)
 
@@ -462,7 +530,7 @@ class App(customtkinter.CTk):
                                             width=120,
                                             placeholder_text="initial z")
                 self.table_3_z .grid(row=9, column=2, pady=20, padx=20)
-
+   
 
     def update_button_event(self):
        robot_1_x_result = self.robot_1_x.get()

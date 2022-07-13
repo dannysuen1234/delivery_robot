@@ -15,6 +15,12 @@ mission = []
 pending = []
 movable_threshold = 1.5
 
+table_1_x = 0
+table_1_y = 0
+table_2_x = 0
+table_2_y = 0
+
+
 #define all robots 
 available_robots = []
 unavailable_robots = []
@@ -79,6 +85,39 @@ def define_robots():
 	magni_1.set_start_point((-8, -7))
 	magni_2.set_start_point((-8, -8))
 
+def update_robot_state():
+	global table_1_x 
+	global table_1_y 
+	global table_2_x 
+	global table_2_y 
+	HOST = '0.0.0.0'
+	PORT = 9998
+	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+	s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+	s.bind((HOST, PORT))
+	s.listen(5)
+	s.settimeout(None)
+	while True:
+		conn, addr =s.accept()
+		indata = conn.recv(1024)
+		message = str(indata.decode())
+		array = message.split()
+		print("message is ", type(message), array)
+		request_type = array[0]
+		x = float(array[1])
+		y = float(array[2])
+		if request_type == "1":
+			magni_1.set_start_point((x, y))
+		elif request_type == "2":
+			magni_2.set_start_point((x, y))
+		elif request_type == "3":
+			table_1_x = x
+			table_1_y = y
+		elif request_type == "4":
+			table_2_x = x
+			table_2_y = y
+
+
 def tcp_connection():
 	global pending_table_handler_running
 	HOST = '0.0.0.0'
@@ -109,6 +148,10 @@ def tcp_connection():
 
 def pending_table_handler():
 	print("here,", pending_table)
+	global table_1_x 
+	global table_1_y 
+	global table_2_x 
+	global table_2_y 
 	global pending_table_handler_running
 	global lookup_robot_from_table
 	pending_table_handler_running = True
@@ -120,11 +163,11 @@ def pending_table_handler():
 			curr_robot = available_robots.pop(0)
 			lookup_robot_from_table[curr_table] = curr_robot
 			if int(curr_table) == 1:
-				x = -5
-				y = -6.5
+				x = table_1_x 
+				y = table_1_y
 			elif int(curr_table) ==2:
-				x = -5
-				y = -3
+				x = table_2_x 
+				y = table_2_y
 			else:
 				x = 1
 				y = 1
@@ -264,4 +307,7 @@ if __name__ == "__main__":
 
 	tcp_thread = threading.Thread(target=tcp_connection)
 	tcp_thread.start()
+
+	robot_state_thread = threading.Thread(target = update_robot_state)
+	robot_state_thread.start()
 

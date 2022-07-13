@@ -5,6 +5,7 @@
     <node name="spawn_maze" pkg="gazebo_ros" type="spawn_model" args="-sdf
  -file $(find magni_gazebo)/models/w311/model.sdf -model walls -x -10 -y -10" output="screen"
 />
+<!--
 
  <node name="goal" pkg="gazebo_ros" type="spawn_model" args="-sdf
  -file $(find magni_gazebo)/models/construction_cone/model.sdf -model goal -x 1 -y 0" output="screen"
@@ -14,6 +15,7 @@
 <node name="start" pkg="gazebo_ros" type="spawn_model" args="-sdf
  -file $(find magni_gazebo)/models/construction_cone/model.sdf -model start -x -9 -y -8" output="screen"
 />
+-->
 <!-- desk 1 -->
 <node name="w311_desk1_1" pkg="gazebo_ros" type="spawn_model" args="-sdf
  -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk1_1 -x -5.2 -y -5.5" output="screen"
