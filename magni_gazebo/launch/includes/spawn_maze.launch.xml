@@ -1,6 +1,31 @@
 <?xml version="1.0"?>
 <launch>
 
+<arg name = "w311_desk1_1_pose" default ="-x -5.2 -y -5.5" />
+<arg name = "w311_desk1_2_pose" default ="-x -3.9 -y -5.156" />
+<arg name = "w311_desk1_3_pose" default ="-x -4.84 -y -4.53" />
+<arg name = "w311_desk1_4_pose" default ="-x -4.27 -y -4.87" />
+<arg name = "w311_desk2_1_pose" default ="-x -0.95 -y -5.5" />
+<arg name = "w311_desk2_2_pose" default ="-x 0.35 -y -5.156" />
+<arg name = "w311_desk2_3_pose" default ="-x -0.59 -y -4.53" />
+<arg name = "w311_desk2_4_pose" default ="-x -0.02 -y -4.87" />
+<arg name = "w311_desk3_1_pose" default ="-x 3.28 -y -5.5" />
+<arg name = "w311_desk3_2_pose" default ="-x 4.58 -y -5.156" />
+<arg name = "w311_desk3_3_pose" default ="-x 3.64 -y -4.53" />
+<arg name = "w311_desk3_4_pose" default ="-x 4.21 -y -4.87" />
+<arg name = "w311_desk4_1_pose" default ="-x -5.2 -y -1.5" />
+<arg name = "w311_desk4_2_pose" default ="-x -3.9 -y -1.156" />
+<arg name = "w311_desk4_3_pose" default ="-x -4.84 -y -0.53" />
+<arg name = "w311_desk4_4_pose" default ="-x -4.27 -y -0.87" />
+<arg name = "w311_desk5_1_pose" default ="-x -1.83 -y -1.5" />
+<arg name = "w311_desk5_2_pose" default ="-x -1.47 -y -0.53" />
+<arg name = "w311_desk6_1_pose" default ="-x 0.36 -y -1.5" />
+<arg name = "w311_desk6_2_pose" default ="-x 1.66 -y -1.156" />
+<arg name = "w311_desk6_3_pose" default ="-x 0.72 -y -0.53" />
+<arg name = "w311_desk6_4_pose" default ="-x 1.29 -y -0.87" />
+<arg name = "w311_desk7_1_pose" default ="-x 3.36 -y -1.5" />
+<arg name = "w311_desk7_2_pose" default ="-x 3.72 -y -0.53" />
+
 
     <node name="spawn_maze" pkg="gazebo_ros" type="spawn_model" args="-sdf
  -file $(find magni_gazebo)/models/w311/model.sdf -model walls -x -10 -y -10" output="screen"
@@ -18,105 +43,104 @@
 -->
 <!-- desk 1 -->
 <node name="w311_desk1_1" pkg="gazebo_ros" type="spawn_model" args="-sdf
- -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk1_1 -x -5.2 -y -5.5" output="screen"
+ -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk1_1  $(arg w311_desk1_1_pose)" output="screen"
 />
     
 <node name="w311_desk1_2" pkg="gazebo_ros" type="spawn_model" args="-sdf
- -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk1_2 -x -3.9 -y -5.156  -Y 3.14" output="screen"
+ -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk1_2 $(arg w311_desk1_2_pose)  -Y 3.14" output="screen"
 />
     
 <node name="w311_desk1_3" pkg="gazebo_ros" type="spawn_model" args="-sdf
- -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk1_3 -x -4.84 -y -4.53 -Y 3.14" output="screen"
+ -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk1_3 $(arg w311_desk1_3_pose) -Y 3.14" output="screen"
 />
 
 <node name="w311_desk1_4" pkg="gazebo_ros" type="spawn_model" args="-sdf
- -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk1_4 -x -4.27 -y -4.87" output="screen"
+ -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk1_4 $(arg w311_desk1_4_pose)" output="screen"
 />
 
 <!-- desk 2 -->
 
 <node name="w311_desk2_1" pkg="gazebo_ros" type="spawn_model" args="-sdf
- -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk2_1 -x -0.95 -y -5.5" output="screen"
+ -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk2_1 $(arg w311_desk2_1_pose)" output="screen"
 />
     
 <node name="w311_desk2_2" pkg="gazebo_ros" type="spawn_model" args="-sdf
- -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk2_2 -x 0.35 -y -5.156  -Y 3.14" output="screen"
+ -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk2_2 $(arg w311_desk2_2_pose)  -Y 3.14" output="screen"
 />
     
 <node name="w311_desk2_3" pkg="gazebo_ros" type="spawn_model" args="-sdf
- -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk2_3 -x -0.59 -y -4.53 -Y 3.14" output="screen"
+ -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk2_3 $(arg w311_desk2_3_pose) -Y 3.14" output="screen"
 />
 
 <node name="w311_desk2_4" pkg="gazebo_ros" type="spawn_model" args="-sdf
- -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk2_4 -x -0.02 -y -4.87" output="screen"/>
+ -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk2_4 $(arg w311_desk2_4_pose)" output="screen"/>
 
 <!-- desk 3 -->
 
 <node name="w311_desk3_1" pkg="gazebo_ros" type="spawn_model" args="-sdf
- -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk3_1 -x 3.28 -y -5.5" output="screen"
+ -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk3_1 $(arg w311_desk3_1_pose)" output="screen"
 />
     
 <node name="w311_desk3_2" pkg="gazebo_ros" type="spawn_model" args="-sdf
- -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk3_2 -x 4.58 -y -5.156  -Y 3.14" output="screen"
+ -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk3_2 $(arg w311_desk3_2_pose)  -Y 3.14" output="screen"
 />
     
 <node name="w311_desk3_3" pkg="gazebo_ros" type="spawn_model" args="-sdf
- -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk3_3 -x 3.64 -y -4.53 -Y 3.14" output="screen"
+ -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk3_3 $(arg w311_desk3_3_pose) -Y 3.14" output="screen"
 />
 
 <node name="w311_desk3_4" pkg="gazebo_ros" type="spawn_model" args="-sdf
- -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk3_4 -x 4.21 -y -4.87" output="screen"/>
+ -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk3_4 $(arg w311_desk3_4_pose)" output="screen"/>
 
 <!-- desk 4 -->
 <node name="w311_desk4_1" pkg="gazebo_ros" type="spawn_model" args="-sdf
- -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk4_1 -x -5.2 -y -1.5" output="screen"
+ -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk4_1 $(arg w311_desk4_1_pose)" output="screen"
 />
     
 <node name="w311_desk4_2" pkg="gazebo_ros" type="spawn_model" args="-sdf
- -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk4_2 -x -3.9 -y -1.156  -Y 3.14" output="screen"
+ -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk4_2 $(arg w311_desk4_2_pose)  -Y 3.14" output="screen"
 />
     
 <node name="w311_desk4_3" pkg="gazebo_ros" type="spawn_model" args="-sdf
- -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk4_3 -x -4.84 -y -0.53 -Y 3.14" output="screen"
+ -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk4_3 $(arg w311_desk4_3_pose) -Y 3.14" output="screen"
 />
 
 <node name="w311_desk4_4" pkg="gazebo_ros" type="spawn_model" args="-sdf
- -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk4_4 -x -4.27 -y -0.87" output="screen"/>
+ -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk4_4 $(arg w311_desk4_4_pose)" output="screen"/>
 
 <!-- desk 5 -->
 
 <node name="w311_desk5_1" pkg="gazebo_ros" type="spawn_model" args="-sdf
- -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk5_1 -x -1.83 -y -1.5" output="screen"
+ -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk5_1 $(arg w311_desk5_1_pose)" output="screen"
 />
     
 <node name="w311_desk5_2" pkg="gazebo_ros" type="spawn_model" args="-sdf
- -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk5_2 -x -1.47 -y -0.53  -Y 3.14" output="screen"
+ -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk5_2 $(arg w311_desk5_2_pose)  -Y 3.14" output="screen"
 />
 
 <!-- desk 6 -->
 <node name="w311_desk6_1" pkg="gazebo_ros" type="spawn_model" args="-sdf
- -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk6_1 -x 0.36 -y -1.5" output="screen"
+ -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk6_1 $(arg w311_desk6_1_pose)" output="screen"
 />
     
 <node name="w311_desk6_2" pkg="gazebo_ros" type="spawn_model" args="-sdf
- -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk6_2 -x 1.66 -y -1.156  -Y 3.14" output="screen"
+ -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk6_2 $(arg w311_desk6_2_pose)  -Y 3.14" output="screen"
 />
     
 <node name="w311_desk6_3" pkg="gazebo_ros" type="spawn_model" args="-sdf
- -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk6_3 -x 0.72 -y -0.53 -Y 3.14" output="screen"
+ -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk6_3 $(arg w311_desk6_3_pose) -Y 3.14" output="screen"
 />
 
 <node name="w311_desk6_4" pkg="gazebo_ros" type="spawn_model" args="-sdf
- -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk6_4 -x 1.29 -y -0.87" output="screen"/>
+ -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk6_4 $(arg w311_desk6_4_pose)" output="screen"/>
 
 <!-- desk 7 -->
 <node name="w311_desk7_1" pkg="gazebo_ros" type="spawn_model" args="-sdf
- -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk7_1 -x 3.36 -y -1.5" output="screen"
+ -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk7_1 $(arg w311_desk7_1_pose)" output="screen"
 />
     
 <node name="w311_desk7_2" pkg="gazebo_ros" type="spawn_model" args="-sdf
- -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk7_2 -x 3.72 -y -0.53  -Y 3.14" output="screen"
+ -file $(find magni_gazebo)/models/w311_desk_2/model.sdf -model w311_desk7_2 $(arg w311_desk7_2_pose)  -Y 3.14" output="screen"
 />
-
 
 </launch>

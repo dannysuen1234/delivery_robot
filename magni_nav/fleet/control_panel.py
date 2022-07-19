@@ -7,6 +7,9 @@ import os
 import threading
 import webbrowser
 import socket
+import yaml
+from gazebo_msgs.msg import ModelStates
+import rospy  
 
 customtkinter.set_appearance_mode("Dark") 
 customtkinter.set_default_color_theme("blue")  
@@ -111,12 +114,31 @@ class App(customtkinter.CTk):
 	
         self.tasks_button_1_world.grid(row=2, column=0, pady=20, padx=20)
 
+        self.save_model_button = customtkinter.CTkButton(master=self.frame_right,
+                                                text="Save config",
+                                                command=self.save_config_button)
+        self.save_model_button.grid(row=2, column=2, pady=10, padx=0)
+
+        self.config_name = customtkinter.CTkEntry(master=self.frame_right,
+                                            width=120,
+                                            placeholder_text="config name")
+        self.config_name.grid(row=2, column=1, pady=10, padx=0)
+
         self.tasks_button_1_nav = customtkinter.CTkButton(master=self.frame_right,
                                                 text="Start mapping",
                                                 command=self.mapping_button)
 	
-        self.tasks_button_1_nav.grid(row=2, column=1, pady=20, padx=40)
+        self.tasks_button_1_nav.grid(row=3, column=0, pady=20, padx=40)
 
+        self.tasks_button_4 = customtkinter.CTkButton(master=self.frame_right,
+                                                text="Save map",
+                                                command=self.save_map_button)
+        self.tasks_button_4.grid(row=3, column=2, pady=10, padx=0)
+
+        self.map_name = customtkinter.CTkEntry(master=self.frame_right,
+                                            width=120,
+                                            placeholder_text="map name")
+        self.map_name.grid(row=3, column=1, pady=10, padx=0)
 
         #define task 2 buttons
 
@@ -164,15 +186,7 @@ class App(customtkinter.CTk):
                                                 command=self.exit_button)
         self.tasks_button_3.grid(row=7, column=0, pady=20, padx=20)
 
-        self.tasks_button_4 = customtkinter.CTkButton(master=self.frame_right,
-                                                text="Save map",
-                                                command=self.save_map_button)
-        self.tasks_button_4.grid(row=3, column=1, pady=10, padx=0)
 
-        self.map_name = customtkinter.CTkEntry(master=self.frame_right,
-                                            width=120,
-                                            placeholder_text="map name")
-        self.map_name.grid(row=3, column=0, pady=10, padx=0)
 
         self.fleet_label = customtkinter.CTkLabel(master = self.frame_right,
                                                  text = "Start fleet management", 
@@ -271,7 +285,10 @@ class App(customtkinter.CTk):
            map_path = rospack.get_path(navigation_package)
            map_full_path = map_path+"/maps/" + navigation_map +".yaml"
            
-           command = "roslaunch magni_gazebo multi_magni_nav.launch robot_1_x:=" + str(robot_1_x) +" robot_1_y:=" + str(robot_1_y) + " robot_2_x:=" + str(robot_2_x) + " robot_2_y:=" + str(robot_2_y) + " map_file:=" + map_full_path
+           desk_pose_command = load_yaml_to_command("testing")
+
+           
+           command = "roslaunch magni_gazebo multi_magni_nav.launch robot_1_x:=" + str(robot_1_x) +" robot_1_y:=" + str(robot_1_y) + " robot_2_x:=" + str(robot_2_x) + " robot_2_y:=" + str(robot_2_y) + " map_file:=" + map_full_path + desk_pose_command
            delivery_robot_thread = threading.Thread(target = os.system, args=[command])
            delivery_robot_thread.start()
 
@@ -292,13 +309,13 @@ class App(customtkinter.CTk):
 
                 self.front_end_button = customtkinter.CTkButton(master=self.frame_right,
                                                 text="Front end",
-                                                command=self.front_end_button)
+                                                command=self.front_end_button_event)
 
                 self.front_end_button.grid(row=1, column=0, pady=10, padx=20)
 
                 self.back_end_button = customtkinter.CTkButton(master=self.frame_right,
                                                 text="Back end",
-                                                command=self.back_end_button)
+                                                command=self.back_end_button_event)
 
                 self.back_end_button.grid(row=1, column=1, pady=0, padx=10)
 
@@ -391,16 +408,19 @@ class App(customtkinter.CTk):
         z.start()
         o = threading.Thread(target = os.system, args=[cmd_4])
         o.start()
-    def front_end_button(self):
+    def front_end_button_event(self):
         global frontend_started
+        print("front end 1")
         if frontend_started == False:
+            
             frontend_started = True
             map_path = rospack.get_path(navigation_package)
             whole_path = map_path + "/fleet/" + "start_front_end.bash"
             front_end_thread = threading.Thread(target = os.system, args = [whole_path])
             front_end_thread.start() 
 
-    def back_end_button(self):
+
+    def back_end_button_event(self):
         global backend_started
         if backend_started == False:
             backend_started = True
@@ -428,6 +448,24 @@ class App(customtkinter.CTk):
         except:
             tkinter.messagebox.showinfo("Failed! Please try again.")
         print(command)
+
+    def save_config_button(self):
+        rospy.init_node('control_panel', anonymous = True)
+        model_dict = {}
+        config_name = self.config_name.get()
+        path = rospack.get_path(navigation_package)
+        full_path = path + "/fleet/yaml/" + config_name + ".yaml"
+        print(1)
+        data = rospy.wait_for_message("/gazebo/model_states", ModelStates)
+        model_name = data.name
+        model_pose = data.pose
+        print(2)
+        for i in range (len(model_name)):
+                if "w311" in model_name[i]:
+                        model_dict[model_name[i]] = [model_pose[i].position.x,model_pose[i].position.y, model_pose[i].position.z]
+
+        with open(full_path, 'w') as file:
+                documents = yaml.dump(model_dict, file)
     
     def fleet_button(self):
         if button_condition["fleet_started"] == False and button_condition["task_2_delivery_robot_started"] ==True :
@@ -540,6 +578,17 @@ class App(customtkinter.CTk):
 
     def on_closing(self, event=0):
         self.destroy()
+
+def load_yaml_to_command(config_name):
+   path = rospack.get_path(navigation_package)
+   full_path = path + "/fleet/yaml/" + config_name + ".yaml"
+   with open(full_path) as file:
+
+      desk_list = yaml.load(file, Loader=yaml.FullLoader)
+      command =""
+      for item in desk_list:
+         command += " "+ item +"_pose:=" + "'-x " + str(desk_list[item][0]) + " -y " + str(desk_list[item][1]) +"'"
+      return command 
 
 if __name__ == "__main__":
     app = App()
