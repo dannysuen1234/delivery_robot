@@ -3,8 +3,8 @@ from gazebo_msgs.msg import ModelStates
 import rospy 
 
 img = Image.open('/home/vtl/magni_ws/src/magni_nav/maps/w311_virtual_world.pgm')
-	
 pixels = img.load()
+
 
 
 #img.putpixel((835, 1214), 250)
@@ -123,7 +123,7 @@ desk_name_to_set_name = {'w311_desk1_1': 'table_set_11',
 'w311_desk7_2': 'table_set_72'
 }
 
-occupied_position = []
+
 
 def curr_model_state():
 	rospy.init_node('control_panel', anonymous = True)
@@ -168,14 +168,18 @@ def update_obstacle(delta_x, delta_y, obstacle_set):
 			if pixel_color <100:
 				img.putpixel((i+delta_x_pixel, j+delta_y_pixel), 0)
 				occupied_position.append([i+delta_x_pixel, j+delta_y_pixel])
-
-model_state = curr_model_state()
-
-
-for item in desk_name:
-	x, y, z = get_pose_diff(model_state[item], globals()[item], item)
-	update_obstacle(x, y, z)
-
-img.save("/home/vtl/magni_ws/src/magni_nav/maps/testing2_map.pgm")
-print("saved")
+occupied_position = []
+def auto_update_map():
+	global img
+	global pixels
+	global occupied_position
+	img = Image.open('/home/vtl/magni_ws/src/magni_nav/maps/w311_virtual_world.pgm')
+	pixels = img.load()
+	occupied_position = []
+	for item in desk_name:
+		model_state = curr_model_state()
+		x, y, z = get_pose_diff(model_state[item], globals()[item], item)
+		update_obstacle(x, y, z)
+	img.save("/home/vtl/magni_ws/src/magni_nav/maps/testing2_map.pgm")
+	print("saved")
 

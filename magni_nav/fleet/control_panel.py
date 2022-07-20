@@ -10,7 +10,7 @@ import socket
 import yaml
 from gazebo_msgs.msg import ModelStates
 import rospy  
-
+import edit_pgm 
 customtkinter.set_appearance_mode("Dark") 
 customtkinter.set_default_color_theme("blue")  
 
@@ -121,7 +121,7 @@ class App(customtkinter.CTk):
 
         self.config_name = customtkinter.CTkEntry(master=self.frame_right,
                                             width=120,
-                                            placeholder_text="config name")
+                                            placeholder_text="config/map name")
         self.config_name.grid(row=2, column=1, pady=10, padx=0)
 
         self.tasks_button_1_nav = customtkinter.CTkButton(master=self.frame_right,
@@ -135,10 +135,11 @@ class App(customtkinter.CTk):
                                                 command=self.save_map_button)
         self.tasks_button_4.grid(row=3, column=2, pady=10, padx=0)
 
-        self.map_name = customtkinter.CTkEntry(master=self.frame_right,
-                                            width=120,
-                                            placeholder_text="map name")
-        self.map_name.grid(row=3, column=1, pady=10, padx=0)
+        self.auto_update_button = customtkinter.CTkButton(master=self.frame_right,
+                                                text="Auto update map",
+                                                command=self.auto_update_map_button)
+
+        self.auto_update_button.grid(row=3, column=1, pady=10, padx=0)
 
         #define task 2 buttons
 
@@ -172,7 +173,7 @@ class App(customtkinter.CTk):
 
         self.tasks_button_2_map = customtkinter.CTkEntry(master=self.frame_right,
                                             width=120,
-                                            placeholder_text="map name")
+                                            placeholder_text="config/map name")
         self.tasks_button_2_map.grid(row=5, column=2, pady=20, padx=20)
 
 
@@ -286,7 +287,6 @@ class App(customtkinter.CTk):
            map_full_path = map_path+"/maps/" + navigation_map +".yaml"
            
            desk_pose_command = load_yaml_to_command("testing")
-
            
            command = "roslaunch magni_gazebo multi_magni_nav.launch robot_1_x:=" + str(robot_1_x) +" robot_1_y:=" + str(robot_1_y) + " robot_2_x:=" + str(robot_2_x) + " robot_2_y:=" + str(robot_2_y) + " map_file:=" + map_full_path + desk_pose_command
            delivery_robot_thread = threading.Thread(target = os.system, args=[command])
@@ -437,7 +437,7 @@ class App(customtkinter.CTk):
         if button_condition["task_1_mapping_started"] == False:
              print("failed")
              return
-        map_name = self.map_name.get()
+        map_name = self.config_name.get()
         map_path = rospack.get_path(navigation_package)
         whole_path = map_path + "/maps/" + map_name
         try:
@@ -466,6 +466,9 @@ class App(customtkinter.CTk):
 
         with open(full_path, 'w') as file:
                 documents = yaml.dump(model_dict, file)
+
+    def auto_update_map_button(self):
+         edit_pgm.auto_update_map()
     
     def fleet_button(self):
         if button_condition["fleet_started"] == False and button_condition["task_2_delivery_robot_started"] ==True :
