@@ -285,8 +285,8 @@ class App(customtkinter.CTk):
            if navigation_map == "": navigation_map = "w311_virtual_world"
            map_path = rospack.get_path(navigation_package)
            map_full_path = map_path+"/maps/" + navigation_map +".yaml"
-           
-           desk_pose_command = load_yaml_to_command("testing")
+           print(map_full_path)
+           desk_pose_command = load_yaml_to_command(navigation_map)
            
            command = "roslaunch magni_gazebo multi_magni_nav.launch robot_1_x:=" + str(robot_1_x) +" robot_1_y:=" + str(robot_1_y) + " robot_2_x:=" + str(robot_2_x) + " robot_2_y:=" + str(robot_2_y) + " map_file:=" + map_full_path + desk_pose_command
            delivery_robot_thread = threading.Thread(target = os.system, args=[command])
@@ -468,8 +468,9 @@ class App(customtkinter.CTk):
                 documents = yaml.dump(model_dict, file)
 
     def auto_update_map_button(self):
-         edit_pgm.auto_update_map()
-    
+         map_name = self.config_name.get()
+         edit_pgm.auto_update_map(map_name)
+   
     def fleet_button(self):
         if button_condition["fleet_started"] == False and button_condition["task_2_delivery_robot_started"] ==True :
             button_condition["fleet_started"] = True

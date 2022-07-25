@@ -169,7 +169,7 @@ def update_obstacle(delta_x, delta_y, obstacle_set):
 				img.putpixel((i+delta_x_pixel, j+delta_y_pixel), 0)
 				occupied_position.append([i+delta_x_pixel, j+delta_y_pixel])
 occupied_position = []
-def auto_update_map():
+def auto_update_map(map_name):
 	global img
 	global pixels
 	global occupied_position
@@ -180,6 +180,11 @@ def auto_update_map():
 		model_state = curr_model_state()
 		x, y, z = get_pose_diff(model_state[item], globals()[item], item)
 		update_obstacle(x, y, z)
-	img.save("/home/vtl/magni_ws/src/magni_nav/maps/testing2_map.pgm")
+	img.save("/home/vtl/magni_ws/src/magni_nav/maps/" + map_name + ".pgm")
+	yaml_data = "image: " +  "/home/vtl/magni_ws/src/magni_nav/maps/" + map_name +".pgm\nresolution: 0.050000\norigin: [-51.224998, -51.224998, 0.000000]\nnegate: 0\noccupied_thresh: 0.65\nfree_thresh: 0.196"
+	yaml_file = open("/home/vtl/magni_ws/src/magni_nav/maps/" +map_name + ".yaml", 'w' )
+	yaml_file.write(yaml_data)
+	yaml_file.close()
+	print(yaml_file)
 	print("saved")
 
