@@ -34,6 +34,3 @@ while True:
 	print(table_number)
 	conn.close()
 	new_command(table_number)
-
-
-

@@ -1,5 +1,5 @@
 footprint: [[0.13, 0.24], [0.13, -0.24], [-0.37, -0.24], [-0.37, 0.24]]
-footprint_padding: 0.01
+footprint_padding: 0.22
 
 robot_base_frame: $(arg prefix)base_footprint
 update_frequency: 0.25
@@ -21,4 +21,4 @@ obstacles_laser:
     laser: {sensor_frame: $(arg prefix)laser, data_type: LaserScan, clearing: true, marking: true, topic: scan, inf_is_valid: true}
 
 inflation:
-    inflation_radius: 0.3
+    inflation_radius: 0.2

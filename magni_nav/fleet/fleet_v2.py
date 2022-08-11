@@ -82,8 +82,8 @@ magni_1 = robot("magni_1")
 magni_2 = robot("magni_2")
 
 def define_robots():
-	magni_1.set_start_point((-8, -7))
-	magni_2.set_start_point((-8, -8))
+	magni_1.set_start_point((-7.5, -2.5))
+	magni_2.set_start_point((-7.5, -3.5))
 
 def update_robot_state():
 	global table_1_x 
@@ -241,7 +241,7 @@ def robot_movable (robot_state_list, robot, threshold):
 	return True
 
 
-#check this function to debug!!!
+
 def update_robot_status(): 
 	rate = rospy.Rate(10)
 	for robots in pending:

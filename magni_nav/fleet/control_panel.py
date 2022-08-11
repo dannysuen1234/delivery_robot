@@ -11,6 +11,7 @@ import yaml
 from gazebo_msgs.msg import ModelStates
 import rospy  
 import edit_pgm 
+import valid_name
 customtkinter.set_appearance_mode("Dark") 
 customtkinter.set_default_color_theme("blue")  
 
@@ -67,7 +68,7 @@ class App(customtkinter.CTk):
         # configure grid layout (1x11)
         self.frame_left.grid_rowconfigure(0, minsize=10)   # empty row with minsize as spacing
         self.frame_left.grid_rowconfigure(5, weight=1)  # empty row as spacing
-        self.frame_left.grid_rowconfigure(8, minsize=20)    # empty row with minsize as spacing
+        self.frame_left.grid_rowconfigure(8, minsize=20)    # em'task_1_world_started'pty row with minsize as spacing
         self.frame_left.grid_rowconfigure(11, minsize=10)  # empty row with minsize as spacing
 
         self.label_1 = customtkinter.CTkLabel(master=self.frame_left,
@@ -278,16 +279,20 @@ class App(customtkinter.CTk):
            robot_2_x = self.tasks_button_2_robot_2_x.get()
            robot_2_y = self.tasks_button_2_robot_2_y.get()
            navigation_map = self.tasks_button_2_map.get()
-           if robot_1_x == "": robot_1_x = "-8.0"
-           if robot_1_y == "": robot_1_y = "-7.0"
-           if robot_2_x =="": robot_2_x = "-8.0"
-           if robot_2_y == "": robot_2_y = "-8.0"
-           if navigation_map == "": navigation_map = "w311_virtual_world"
+           if robot_1_x == "": robot_1_x = "-7.5"
+           if robot_1_y == "": robot_1_y = "-2.5"
+           if robot_2_x =="": robot_2_x = "-7.5"
+           if robot_2_y == "": robot_2_y = "-3.5"
            map_path = rospack.get_path(navigation_package)
-           map_full_path = map_path+"/maps/" + navigation_map +".yaml"
-           print(map_full_path)
+
+           if navigation_map == "":
+              map_full_path = map_path+"/maps/w311_virtual_world_2.yaml"
+           else:
+              map_full_path = map_path+"/maps/" + navigation_map +".yaml"
+          
            desk_pose_command = load_yaml_to_command(navigation_map)
-           
+           if navigation_map == "":
+                      desk_pose_command = ""
            command = "roslaunch magni_gazebo multi_magni_nav.launch robot_1_x:=" + str(robot_1_x) +" robot_1_y:=" + str(robot_1_y) + " robot_2_x:=" + str(robot_2_x) + " robot_2_y:=" + str(robot_2_y) + " map_file:=" + map_full_path + desk_pose_command
            delivery_robot_thread = threading.Thread(target = os.system, args=[command])
            delivery_robot_thread.start()
@@ -313,11 +318,11 @@ class App(customtkinter.CTk):
 
                 self.front_end_button.grid(row=1, column=0, pady=10, padx=20)
 
-                self.back_end_button = customtkinter.CTkButton(master=self.frame_right,
-                                                text="Back end",
-                                                command=self.back_end_button_event)
+                #self.back_end_button = customtkinter.CTkButton(master=self.frame_right,
+                 #                               text="Back end",
+                  #                              command=self.back_end_button_event)
 
-                self.back_end_button.grid(row=1, column=1, pady=0, padx=10)
+                #self.back_end_button.grid(row=1, column=1, pady=0, padx=10)
 
 
                 self.web_ordering_label = customtkinter.CTkLabel(master = self.frame_right,
@@ -337,13 +342,62 @@ class App(customtkinter.CTk):
 
                 self.start_order_button.grid(row=3, column=1, pady=0, padx=10)
 
+                self.robot_back_label = customtkinter.CTkLabel(master = self.frame_right,
+                                                 text = "Robot back to origin position", 
+                                                 text_font = ("Roboto Medium", -16))
+
+                self.robot_back_label.grid(row=4, column=0, pady=20, padx=20)
+
+                self.robot_1_return_button = customtkinter.CTkButton(master=self.frame_right,
+                                                text="Return robot 1",
+                                                command=self.robot_1_return_function)
+
+                self.robot_1_return_button.grid(row=5, column=0, pady=0, padx=10)
+
+                self.robot_2_return_button = customtkinter.CTkButton(master=self.frame_right,
+                                                text="Return robot 2",
+                                                command=self.robot_2_return_function)
+
+                self.robot_2_return_button.grid(row=5, column=1, pady=0, padx=10)
+
+    def robot_1_return_function (self):
+      if button_condition['fleet_started'] == True:
+        table_no = 1
+        data_to_send = str(int(table_no) *-1)
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect((HOST, 9999))
+        s.send(data_to_send.encode())
+        
+        s.close()
+      else:
+        print("failed")
+
+    def robot_2_return_function (self):
+      if button_condition['fleet_started'] == True:
+        table_no = 2
+        data_to_send = str(int(table_no) *-1)
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect((HOST, 9999))
+        s.send(data_to_send.encode())
+        
+        s.close()
+      else:
+        print("failed")
+
     def single_world_button(self):
         if button_condition['task_2_delivery_robot_started'] == True or button_condition['task_1_world_started']:
             print("please exit task 1")
             return
         button_condition['task_1_world_started'] = True
-        path = rospack.get_path(navigation_package)
-        mapping_world_thread = threading.Thread(target = os.system, args = [path + "/fleet/start_single_robot.bash"])
+        #path = rospack.get_path(navigation_package)
+        #mapping_world_thread = threading.Thread(target = os.system, args = [path + "/fleet/start_single_robot.bash"])
+        #mapping_world_thread.start()
+
+        map_path = rospack.get_path("magni_nav")
+        map_full_path = map_path+"/maps/" + "default.yaml"  
+        desk_pose_command = load_yaml_to_command("default")
+        command = "roslaunch magni_gazebo single_robot_world.launch map_file:=" + map_full_path #+ desk_pose_command
+        mapping_world_thread = threading.Thread(target = os.system, args=[command])
         mapping_world_thread.start()
 
     def update_robot_1_event(self):
@@ -409,25 +463,28 @@ class App(customtkinter.CTk):
         o = threading.Thread(target = os.system, args=[cmd_4])
         o.start()
     def front_end_button_event(self):
-        global frontend_started
-        print("front end 1")
-        if frontend_started == False:
-            
-            frontend_started = True
+
+        if button_condition['frontend_started'] == False:
+
+            button_condition['frontend_started'] = True
             map_path = rospack.get_path(navigation_package)
             whole_path = map_path + "/fleet/" + "start_front_end.bash"
             front_end_thread = threading.Thread(target = os.system, args = [whole_path])
             front_end_thread.start() 
-
-
-    def back_end_button_event(self):
-        global backend_started
-        if backend_started == False:
-            backend_started = True
             map_path = rospack.get_path(navigation_package)
             whole_path = map_path + "/fleet/" + "start_back_end.bash"
             back_end_thread = threading.Thread(target = os.system, args = [whole_path])
             back_end_thread.start() 
+
+
+    #def back_end_button_event(self):
+    #    global backend_started
+    #    if backend_started == False:
+    #        backend_started = True
+    #        map_path = rospack.get_path(navigation_package)
+    #        whole_path = map_path + "/fleet/" + "start_back_end.bash"
+    #        back_end_thread = threading.Thread(target = os.system, args = [whole_path])
+    #        back_end_thread.start() 
 
     def start_ordering_button(self):
         table_no = self.website_table_number.get()
@@ -450,26 +507,38 @@ class App(customtkinter.CTk):
         print(command)
 
     def save_config_button(self):
-        rospy.init_node('control_panel', anonymous = True)
-        model_dict = {}
+      if button_condition['task_1_world_started'] == True :
         config_name = self.config_name.get()
-        path = rospack.get_path(navigation_package)
-        full_path = path + "/fleet/yaml/" + config_name + ".yaml"
-        print(1)
-        data = rospy.wait_for_message("/gazebo/model_states", ModelStates)
-        model_name = data.name
-        model_pose = data.pose
-        print(2)
-        for i in range (len(model_name)):
+        path = rospack.get_path(navigation_package) + "/fleet/yaml"
+        rospy.init_node('control_panel', anonymous = True)
+        if valid_name.valid_name(config_name, path):
+           model_dict = {}
+           path = rospack.get_path(navigation_package)
+           full_path = path + "/fleet/yaml/" + config_name + ".yaml"
+           data = rospy.wait_for_message("/gazebo/model_states", ModelStates)
+           model_name = data.name
+           model_pose = data.pose
+           for i in range (len(model_name)):
                 if "w311" in model_name[i]:
                         model_dict[model_name[i]] = [model_pose[i].position.x,model_pose[i].position.y, model_pose[i].position.z]
 
-        with open(full_path, 'w') as file:
-                documents = yaml.dump(model_dict, file)
+           with open(full_path, 'w') as file:
+                   documents = yaml.dump(model_dict, file)
+        else:
+            print("invalid name")
+      else:
+        print("failed")
 
     def auto_update_map_button(self):
-         map_name = self.config_name.get()
-         edit_pgm.auto_update_map(map_name)
+         if button_condition['task_1_world_started'] == True:
+             map_name = self.config_name.get()
+             path = rospack.get_path(navigation_package) +"/maps"
+             if valid_name.valid_name(map_name, path):
+                edit_pgm.auto_update_map(map_name)
+             else:
+                print("not valid name")
+         else:
+             print("failed")
    
     def fleet_button(self):
         if button_condition["fleet_started"] == False and button_condition["task_2_delivery_robot_started"] ==True :

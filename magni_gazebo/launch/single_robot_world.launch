@@ -1,5 +1,31 @@
 <?xml version="1.0" ?>
 <launch>
+<!-- for changing gazebo model pose -->
+<arg name = "w311_desk1_1_pose" default ="" />
+<arg name = "w311_desk1_2_pose" default ="" />
+<arg name = "w311_desk1_3_pose" default ="" />
+<arg name = "w311_desk1_4_pose" default ="" />
+<arg name = "w311_desk2_1_pose" default ="" />
+<arg name = "w311_desk2_2_pose" default ="" />
+<arg name = "w311_desk2_3_pose" default ="" />
+<arg name = "w311_desk2_4_pose" default ="" />
+<arg name = "w311_desk3_1_pose" default ="" />
+<arg name = "w311_desk3_2_pose" default ="" />
+<arg name = "w311_desk3_3_pose" default ="" />
+<arg name = "w311_desk3_4_pose" default ="" />
+<arg name = "w311_desk4_1_pose" default ="" />
+<arg name = "w311_desk4_2_pose" default ="" />
+<arg name = "w311_desk4_3_pose" default ="" />
+<arg name = "w311_desk4_4_pose" default ="" />
+<arg name = "w311_desk5_1_pose" default ="" />
+<arg name = "w311_desk5_2_pose" default ="" />
+<arg name = "w311_desk6_1_pose" default ="" />
+<arg name = "w311_desk6_2_pose" default ="" />
+<arg name = "w311_desk6_3_pose" default ="" />
+<arg name = "w311_desk6_4_pose" default ="" />
+<arg name = "w311_desk7_1_pose" default ="" />
+<arg name = "w311_desk7_2_pose" default ="" />
+
 <arg name="map_file" default="$(find magni_nav)/maps/w311_virtual_world.yaml" doc="Path to a map .yaml file (required)." />
   <arg name="virtual_walls_map_file" default="$(arg map_file)" doc="Path to a virtual walls map .yaml file (optional)." />
   <arg name="with_virtual_walls" default="false" />
@@ -54,7 +80,34 @@
         <arg name="use_sim_time" value="true" />
     </include>
 
-<include file="$(find magni_gazebo)/launch/includes/spawn_maze.launch.xml" />
+<include file="$(find magni_gazebo)/launch/includes/spawn_maze.launch.xml" if="$(eval arg('w311_desk1_1_pose') == '')" />
+
+<include file="$(find magni_gazebo)/launch/includes/spawn_maze.launch.xml" if="$(eval arg('w311_desk1_1_pose') != '')">
+<arg name = "w311_desk1_1_pose" value ="$(arg w311_desk1_1_pose)" />
+<arg name = "w311_desk1_2_pose" value ="$(arg w311_desk1_2_pose)" />
+<arg name = "w311_desk1_3_pose" value ="$(arg w311_desk1_3_pose)" />
+<arg name = "w311_desk1_4_pose" value ="$(arg w311_desk1_4_pose)" />
+<arg name = "w311_desk2_1_pose" value ="$(arg w311_desk2_1_pose)" />
+<arg name = "w311_desk2_2_pose" value ="$(arg w311_desk2_2_pose)" />
+<arg name = "w311_desk2_3_pose" value ="$(arg w311_desk2_3_pose)" />
+<arg name = "w311_desk2_4_pose" value ="$(arg w311_desk2_4_pose)" />
+<arg name = "w311_desk3_1_pose" value ="$(arg w311_desk3_1_pose)" />
+<arg name = "w311_desk3_2_pose" value ="$(arg w311_desk3_2_pose)" />
+<arg name = "w311_desk3_3_pose" value ="$(arg w311_desk3_3_pose)" />
+<arg name = "w311_desk3_4_pose" value ="$(arg w311_desk3_4_pose)" />
+<arg name = "w311_desk4_1_pose" value ="$(arg w311_desk4_1_pose)" />
+<arg name = "w311_desk4_2_pose" value ="$(arg w311_desk4_2_pose)" />
+<arg name = "w311_desk4_3_pose" value ="$(arg w311_desk4_3_pose)" />
+<arg name = "w311_desk4_4_pose" value ="$(arg w311_desk4_4_pose)" />
+<arg name = "w311_desk5_1_pose" value ="$(arg w311_desk5_1_pose)" />
+<arg name = "w311_desk5_2_pose" value ="$(arg w311_desk5_2_pose)" />
+<arg name = "w311_desk6_1_pose" value ="$(arg w311_desk6_1_pose)" />
+<arg name = "w311_desk6_2_pose" value ="$(arg w311_desk6_2_pose)" />
+<arg name = "w311_desk6_3_pose" value ="$(arg w311_desk6_3_pose)" />
+<arg name = "w311_desk6_4_pose" value ="$(arg w311_desk6_4_pose)" />
+<arg name = "w311_desk7_1_pose" value ="$(arg w311_desk7_1_pose)" />
+<arg name = "w311_desk7_2_pose" value ="$(arg w311_desk7_2_pose)" />
+</include>
 
 
 </group>

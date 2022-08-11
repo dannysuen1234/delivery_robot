@@ -6,10 +6,10 @@
   <arg name="virtual_walls_map_file" default="$(arg map_file)" doc="Path to a virtual walls map .yaml file (optional)." />
   <arg name="with_virtual_walls" default="false" />
 
-  <arg name="robot_1_x" default = "-8.0" />
-  <arg name="robot_1_y" default = "-7.0" />
-  <arg name="robot_2_x" default = "-8.0" />
-  <arg name="robot_2_y" default = "-8.0" />
+  <arg name="robot_1_x" default = "-7.5" />
+  <arg name="robot_1_y" default = "-2.5" />
+  <arg name="robot_2_x" default = "-7.5" />
+  <arg name="robot_2_y" default = "-3.5" />
 
 
 <!-- for changing gazebo model pose -->

@@ -81,8 +81,9 @@
         <arg name="use_sim_time" value="true" />
     </include>
 
+<include file="$(find magni_gazebo)/launch/includes/spawn_maze.launch.xml" if="$(eval arg('w311_desk1_1_pose') == '')" />
 
-<include file="$(find magni_gazebo)/launch/includes/spawn_maze.launch.xml" >
+<include file="$(find magni_gazebo)/launch/includes/spawn_maze.launch.xml" if="$(eval arg('w311_desk1_1_pose') != '')">
 <arg name = "w311_desk1_1_pose" value ="$(arg w311_desk1_1_pose)" />
 <arg name = "w311_desk1_2_pose" value ="$(arg w311_desk1_2_pose)" />
 <arg name = "w311_desk1_3_pose" value ="$(arg w311_desk1_3_pose)" />
