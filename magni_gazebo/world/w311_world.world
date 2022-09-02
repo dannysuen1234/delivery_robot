@@ -13,6 +13,14 @@
       <uri>model://ground_plane</uri>
     </include>
 
+<model name="multi_floor_test2">
+<include>
+          <static>true</static>
+          <uri>model://multi_floor_test_2</uri>
+	  <pose>-23 -13.5 0 0 0 0</pose>
+</include>
+</model>
+
  <light type="point" name="point1">
       <pose>-3 -4 1 0 0 0</pose>
       <diffuse>127 127 127 1</diffuse>
@@ -51,6 +59,7 @@
       </attenuation>
       <cast_shadows>false</cast_shadows>
     </light>
+
 
   </world>
 </sdf>

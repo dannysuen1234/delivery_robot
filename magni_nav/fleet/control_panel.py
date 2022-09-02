@@ -279,10 +279,8 @@ class App(customtkinter.CTk):
            robot_2_x = self.tasks_button_2_robot_2_x.get()
            robot_2_y = self.tasks_button_2_robot_2_y.get()
            navigation_map = self.tasks_button_2_map.get()
-           if robot_1_x == "": robot_1_x = "-7.5"
-           if robot_1_y == "": robot_1_y = "-2.5"
-           if robot_2_x =="": robot_2_x = "-7.5"
-           if robot_2_y == "": robot_2_y = "-3.5"
+           if robot_1_x == "": robot_1_x = "0"
+           if robot_1_y == "": robot_1_y = "0"
            map_path = rospack.get_path(navigation_package)
 
            if navigation_map == "":
@@ -290,10 +288,10 @@ class App(customtkinter.CTk):
            else:
               map_full_path = map_path+"/maps/" + navigation_map +".yaml"
           
-           desk_pose_command = load_yaml_to_command(navigation_map)
+           #desk_pose_command = load_yaml_to_command(navigation_map)
            if navigation_map == "":
                       desk_pose_command = ""
-           command = "roslaunch magni_gazebo multi_magni_nav.launch robot_1_x:=" + str(robot_1_x) +" robot_1_y:=" + str(robot_1_y) + " robot_2_x:=" + str(robot_2_x) + " robot_2_y:=" + str(robot_2_y) + " map_file:=" + map_full_path + desk_pose_command
+           command = "roslaunch magni_gazebo single_magni_nav.launch robot_1_x:=" + str(robot_1_x) +" robot_1_y:=" + str(robot_1_y)  + " map_file:=" + map_full_path 
            delivery_robot_thread = threading.Thread(target = os.system, args=[command])
            delivery_robot_thread.start()
 

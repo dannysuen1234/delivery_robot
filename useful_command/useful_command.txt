@@ -1,0 +1,31 @@
+change model pose, angle 1.57:
+
+rostopic pub -1 /gazebo/set_model_state gazebo_msgs/ModelState "model_name: 'magni'
+pose:
+  position:
+    x: 0.0
+    y: 0.0
+    z: 36.2
+  orientation: 
+    x: -0.000352158976791
+    y: 0.000356047975313
+    z: 0.706525195474
+    w: 0.707687711759
+"
+
+command = "rostopic pub -1 /gazebo/set_model_state gazebo_msgs/ModelState \"model_name: 'magni' \n"\
+"pose:\n"\
+"  position:\n"\
+"    x: 0.0\n"\
+"    y: 0.0\n"\
+"    z: " + str(x) + "\n"\
+"  orientation: \n"\
+"    x: -0.000352158976791\n"\
+"    y: 0.000356047975313\n"\
+"    z: 0.706525195474\n"\
+"    w: 0.707687711759\""
+
+change map:
+rosrun map_server map_server /home/vtl/multi_floor_nav/src/magni_nav/maps/3f_v1.yaml
+
+

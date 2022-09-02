@@ -80,7 +80,7 @@
         <arg name="debug" value="$(arg debug)" />
         <arg name="use_sim_time" value="true" />
     </include>
-
+<!-- 
 <include file="$(find magni_gazebo)/launch/includes/spawn_maze.launch.xml" if="$(eval arg('w311_desk1_1_pose') == '')" />
 
 <include file="$(find magni_gazebo)/launch/includes/spawn_maze.launch.xml" if="$(eval arg('w311_desk1_1_pose') != '')">
@@ -109,7 +109,7 @@
 <arg name = "w311_desk7_1_pose" value ="$(arg w311_desk7_1_pose)" />
 <arg name = "w311_desk7_2_pose" value ="$(arg w311_desk7_2_pose)" />
 </include>
-
+-->
 
 </group>
     <!-- start robot -->
@@ -124,13 +124,14 @@
     </include>
 -->
 
+
 <include file="$(find magni_gazebo)/launch/multi_robot.launch">
 <arg name="robot_1_x" value = "$(arg robot_1_x)" />
 <arg name="robot_1_y" value = "$(arg robot_1_y)" />
 <arg name="robot_2_x" value = "$(arg robot_2_x)" />
 <arg name="robot_2_y" value = "$(arg robot_2_y)" />
-
 </include>
+
 
     <!-- Additional nodes (optional)  -->
 

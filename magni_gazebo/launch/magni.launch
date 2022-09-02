@@ -9,7 +9,7 @@
     -->
     <arg name="camera_position" default="forward"/>
 
-   <arg name="init_pose" default ="-x 0 -y 0 -z 0"/>
+   <arg name="init_pose" default ="-x 0 -y 0 -z 0.2 -Y 1.57"/>
    <arg name="robot_name" default="magni"/> 
 
    <arg name = "prefix" default = "" />

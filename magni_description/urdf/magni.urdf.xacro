@@ -242,14 +242,14 @@
       <!-- <origin xyz="${lidar_extrinsics['x']} ${lidar_extrinsics['y']} ${lidar_extrinsics['z']}" 
         rpy="${lidar_extrinsics['roll']} ${lidar_extrinsics['pitch']} ${lidar_extrinsics['yaw']}"/> -->
 
-<origin xyz="${lidar_extrinsics['x']+0.3} ${lidar_extrinsics['y']+0.05} ${lidar_extrinsics['z']}" 
+<origin xyz="${lidar_extrinsics['x']} ${lidar_extrinsics['y']} ${lidar_extrinsics['z']}" 
         rpy="${lidar_extrinsics['roll']} ${lidar_extrinsics['pitch']} ${lidar_extrinsics['yaw']}"/>
 
     </xacro:ur50_lidar>
   </xacro:if>
 
 
-
+<!--
    <joint name="added_joint" type="fixed">
       <origin xyz="-0.1 0 0.245" rpy="0 0 0" />
       <parent link="base_footprint" />
@@ -284,7 +284,7 @@
         </geometry>
       </collision>
     </link>
-
+-->
 
 </robot>
 

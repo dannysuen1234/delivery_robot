@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
-
+ 
 <arg name="camera_position" default="forward"/> 
 <arg name="sonars_installed" default="true"/>
 <arg name="lidar_position" default="top_plate"/>
 <arg name="tower_installed" default="false"/>
 <arg name="shell_installed" default="false"/>
 
-  <arg name="robot_1_x" default = "-8.0" />
-  <arg name="robot_1_y" default = "-7.0" />
+
+  <arg name="robot_1_x" default = "-10.0" />
+  <arg name="robot_1_y" default = "-10.0" />
   <arg name="robot_2_x" default = "-8.0" />
   <arg name="robot_2_y" default = "-8.0" />
+
+
 
   <group ns="magni_1">
     <param name="tf_prefix" value="magni_1" />
@@ -20,7 +23,7 @@
         <arg name="lidar_position" value="$(arg lidar_position)"/>
         <arg name="tower_installed" value="$(arg tower_installed)"/>
         <arg name="shell_installed" value="$(arg shell_installed)"/>
-	<arg name="init_pose" value="-x $(arg robot_1_x) -y $(arg robot_1_y) -z 0" />
+	<arg name="init_pose" value="-x $(arg robot_1_x) -y $(arg robot_1_y) -z 0.2 -Y 0" />
 	<arg name="robot_name" value="magni_1" />
 	<arg name="prefix" value = "magni_1" />
 	<arg name="odom_prefix" value = "magni_1" />
@@ -36,13 +39,11 @@
         <arg name="lidar_position" value="$(arg lidar_position)"/>
         <arg name="tower_installed" value="$(arg tower_installed)"/>
         <arg name="shell_installed" value="$(arg shell_installed)"/>
-	<arg name="init_pose" value="-x $(arg robot_2_x) -y $(arg robot_2_y) -z 0" />
+	<arg name="init_pose" value="-x $(arg robot_2_x) -y $(arg robot_2_y) -z 0.2" />
 	<arg name="robot_name" value="magni_2" />
 	<arg name="prefix" value = "magni_2" />
 	<arg name="odom_prefix" value = "magni_2" />
     </include>
   </group>
-
-
 
 </launch>

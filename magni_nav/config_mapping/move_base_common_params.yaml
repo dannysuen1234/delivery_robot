@@ -1,5 +1,5 @@
 ### footprint
-footprint: [[0.488,-0.293],[0.488,0.293],[-0.412,0.293],[-0.412,-0.293]]
+footprint: [[0.13, 0.24], [0.13, -0.24], [-0.37, -0.24], [-0.37, 0.24]]
 
 ### replanning
 controller_frequency: 5.0   # run controller at 5.0 Hz
