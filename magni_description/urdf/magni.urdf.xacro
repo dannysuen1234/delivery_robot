@@ -27,7 +27,7 @@
   <xacro:include filename="$(find magni_description)/urdf/sensors/sonar_hc-sr04.xacro" />
   <xacro:include filename="$(find magni_description)/urdf/sensors/raspi_camera.xacro" />
   <xacro:include filename="$(find magni_description)/urdf/sensors/ur50_lidar.xacro" />
-<xacro:include filename="$(find magni_description)/urdf/sensors/sick_s300.urdf.xacro" />
+
 
 
   <!-- Robot base_link -->
