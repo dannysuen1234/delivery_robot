@@ -1,8 +1,11 @@
 from PIL import Image
 from gazebo_msgs.msg import ModelStates
 import rospy 
+import rospkg
 
-img = Image.open('/home/vtl/magni_ws/src/magni_nav/maps/w311_virtual_world.pgm')
+rospack = rospkg.RosPack()
+map_path = rospack.get_path("magni_nav")
+img = Image.open(map_path + '/maps/w311_virtual_world.pgm')
 pixels = img.load()
 
 
@@ -173,16 +176,16 @@ def auto_update_map(map_name):
 	global img
 	global pixels
 	global occupied_position
-	img = Image.open('/home/vtl/magni_ws/src/magni_nav/maps/w311_virtual_world.pgm')
+	img = Image.open(map_path +'/maps/w311_virtual_world.pgm')
 	pixels = img.load()
 	occupied_position = []
 	for item in desk_name:
 		model_state = curr_model_state()
 		x, y, z = get_pose_diff(model_state[item], globals()[item], item)
 		update_obstacle(x, y, z)
-	img.save("/home/vtl/magni_ws/src/magni_nav/maps/" + map_name + ".pgm")
-	yaml_data = "image: " +  "/home/vtl/magni_ws/src/magni_nav/maps/" + map_name +".pgm\nresolution: 0.050000\norigin: [-51.224998, -51.224998, 0.000000]\nnegate: 0\noccupied_thresh: 0.65\nfree_thresh: 0.196"
-	yaml_file = open("/home/vtl/magni_ws/src/magni_nav/maps/" +map_name + ".yaml", 'w' )
+	img.save(map_path + "maps/" + map_name + ".pgm")
+	yaml_data = "image: " +  map_path + "/maps/" + map_name +".pgm\nresolution: 0.050000\norigin: [-51.224998, -51.224998, 0.000000]\nnegate: 0\noccupied_thresh: 0.65\nfree_thresh: 0.196"
+	yaml_file = open(map_path + "/maps/" +map_name + ".yaml", 'w' )
 	yaml_file.write(yaml_data)
 	yaml_file.close()
 	print(yaml_file)
