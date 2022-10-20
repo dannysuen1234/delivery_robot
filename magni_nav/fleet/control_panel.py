@@ -452,7 +452,7 @@ class App(customtkinter.CTk):
 
         cmd_1 = "pkill -f ros"
         cmd_2 = "pkill -f rviz"
-        cmd_3 = "pkill -9 -f fleet"
+        cmd_3 = "pkill -9 -f fleet.py"
         cmd_4 = "pkill -f /OrderSystem/"
         x = threading.Thread(target = os.system, args=[cmd_1])
         x.start()
